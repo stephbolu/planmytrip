@@ -47,7 +47,7 @@ class JourneyController extends AbstractController
      * Create Article.
      * @FOSRest\Post("/journey")
      *
-     * @return array
+     * @return Response
      */
 
     public function createJourneyAction(Request $request)

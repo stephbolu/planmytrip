@@ -6,6 +6,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "friendsofsymfony/rest-bundle": "^2.4",
+        "friendsofsymfony/user-bundle": "~2.0",
         "jms/serializer-bundle": "^2.4",
         "sensio/framework-extra-bundle": "^5.2",
         "symfony/console": "4.2.*",
@@ -15,6 +16,10 @@
         "symfony/orm-pack": "^1.0",
         "symfony/property-access": "4.2.*",
         "symfony/serializer": "4.2.*",
+        "symfony/swiftmailer-bundle": "^3.2",
+        "symfony/templating": "4.2.*",
+        "symfony/translation": "4.2.*",
+        "symfony/twig-bundle": "4.2.*",
         "symfony/yaml": "4.2.*"
     },
     "config": {
@@ -64,6 +69,7 @@
     },
     "require-dev": {
         "symfony/maker-bundle": "^1.11",
+        "symfony/phpunit-bridge": "4.2.*",
         "symfony/web-server-bundle": "4.2.*"
     }
 }

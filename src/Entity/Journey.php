@@ -11,16 +11,16 @@ class Journey {
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    public $id;
+    public $idJourney;
 
     /**
      * @ORM\Column(type="text")
      */
     public $description;
 
-    public function getId(): ?int
+    public function getIdJourney(): ?int
     {
-        return $this->id;
+        return $this->idJourney;
     }
 
     public function getDescription(): ?string
