@@ -25,20 +25,50 @@ use App\Service\UtilsService;
 class JourneyController extends AbstractController
 {
 
+    /**
+     * Get journey by id.
+     * @FOSRest\Get("/journey/{id}")
+     * 
+     *
+     * @return Response
+     */
+    public function getJourneyAction(int $id)
+    {
+        $encoders = array(new XmlEncoder(), new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+
+        $repository = $this->getDoctrine()->getRepository(Journey::class);
+        $journey = $repository->find($id);
+        
+        $data = $serializer->serialize($journey, 'json');
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+        
+    }
 
     /**
      * Lists all Journies.
      * @FOSRest\Get("/journies")
      *
-     * @return array
+     * @return Response
      */
-    public function getJourneyAction()
+    public function getJourniesAction()
     {
+        $encoders = array(new XmlEncoder(), new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+
         $repository = $this->getDoctrine()->getRepository(Journey::class);
+        $journies = $repository->findall();
         
-        $journey = $repository->findall();
-        
-        return View::create($journey, Response::HTTP_OK , []);
+        $data = $serializer->serialize($journies, 'json');
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
     }
 
     /**
@@ -53,6 +83,7 @@ class JourneyController extends AbstractController
 
         $journey = new Journey();
         $journey->setDescription($request->get('description'));
+        $journey->setTitle($request->get('title'));
         $em = $this->getDoctrine()->getManager();
         $em->persist($journey);
         $em->flush();
