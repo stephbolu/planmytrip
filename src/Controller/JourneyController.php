@@ -32,21 +32,12 @@ class JourneyController extends AbstractController
      *
      * @return Response
      */
-    public function getJourneyAction(int $id)
-    {
-        $encoders = array(new XmlEncoder(), new JsonEncoder());
-        $normalizers = array(new ObjectNormalizer());
-        $serializer = new Serializer($normalizers, $encoders);
+    public function getJourneyAction(int $id, UtilsService $utilsService){
 
         $repository = $this->getDoctrine()->getRepository(Journey::class);
         $journey = $repository->find($id);
-        
-        $data = $serializer->serialize($journey, 'json');
-        $response = new Response($data);
-        $response->headers->set('Content-Type', 'application/json');
 
-        return $response;
-        
+        return $utilsService->formatResponse($journey);
     }
 
     /**
@@ -55,20 +46,12 @@ class JourneyController extends AbstractController
      *
      * @return Response
      */
-    public function getJourniesAction()
-    {
-        $encoders = array(new XmlEncoder(), new JsonEncoder());
-        $normalizers = array(new ObjectNormalizer());
-        $serializer = new Serializer($normalizers, $encoders);
+    public function getJourniesAction(UtilsService $utilsService){
 
         $repository = $this->getDoctrine()->getRepository(Journey::class);
         $journies = $repository->findall();
-        
-        $data = $serializer->serialize($journies, 'json');
-        $response = new Response($data);
-        $response->headers->set('Content-Type', 'application/json');
 
-        return $response;
+        return $utilsService->formatResponse($journies);
     }
 
     /**
@@ -78,25 +61,17 @@ class JourneyController extends AbstractController
      * @return Response
      */
 
-    public function createJourneyAction(Request $request, UtilsService $utilsService)
-    {
+    public function createJourneyAction(Request $request, UtilsService $utilsService){
 
         $journey = new Journey();
         $journey->setDescription($request->get('description'));
         $journey->setTitle($request->get('title'));
+        
         $em = $this->getDoctrine()->getManager();
         $em->persist($journey);
         $em->flush();
 
-        //$data =  $this->get('jms_serializer')->serialize($journey, 'json');
 
-        $serializer = $utilsService->getSerializer();
-        $data = $serializer->serialize($journey, 'json');
-
-        $response = new Response($data);
-        $response->headers->set('Content-Type', 'application/json');
-
-        return $response;
-        
+        return $utilsService->formatResponse($journey);
     }
 }

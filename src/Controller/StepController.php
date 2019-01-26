@@ -19,6 +19,9 @@ use App\Entity\Step;
 use App\Entity\Journey;
 use App\Entity\City;
 
+// Services
+use App\Service\UtilsService;
+
 
 /**
  * Step controller.
@@ -32,24 +35,14 @@ class StepController extends AbstractController
      * Get step by id.
      * @FOSRest\Get("/step/{idStep}")
      * 
-     *
      * @return Response
      */
-    public function getStepAction(int $idStep)
-    {
-        $encoders = array(new XmlEncoder(), new JsonEncoder());
-        $normalizers = array(new ObjectNormalizer());
-        $serializer = new Serializer($normalizers, $encoders);
+    public function getStepAction(int $idStep, UtilsService $utilsService){
 
         $repository = $this->getDoctrine()->getRepository(Step::class);
         $step = $repository->find($idStep);
-        
-        $data = $serializer->serialize($step, 'json');
-        $response = new Response($data);
-        $response->headers->set('Content-Type', 'application/json');
 
-        return $response;
-        
+        return $utilsService->formatResponse($step);
     }
 
     /**
@@ -58,20 +51,12 @@ class StepController extends AbstractController
      *
      * @return Response
      */
-    public function getStepsbyJourneyAction(int $idJourney)
-    {
-        $encoders = array(new XmlEncoder(), new JsonEncoder());
-        $normalizers = array(new ObjectNormalizer());
-        $serializer = new Serializer($normalizers, $encoders);
+    public function getStepsbyJourneyAction(int $idJourney, UtilsService $utilsService){
 
         $repository = $this->getDoctrine()->getRepository(Step::class);
         $steps = $repository->findby(array('journey' => $idJourney));
         
-        $data = $serializer->serialize($steps, 'json');
-        $response = new Response($data);
-        $response->headers->set('Content-Type', 'application/json');
-
-        return $response;
+        return $utilsService->formatResponse($steps);
     }
 
     /**
@@ -80,20 +65,16 @@ class StepController extends AbstractController
      *
      * @return Response
      */
+    public function createStepAction(Request $request, UtilsService $utilsService){
 
-    public function createStepAction(Request $request)
-    {
-
-        $encoders = array(new XmlEncoder(), new JsonEncoder());
-        $normalizers = array(new ObjectNormalizer());
-
-        $serializer = new Serializer($normalizers, $encoders);
-
+        // Retrieving asociated entities
         $journeyRepository = $this->getDoctrine()->getRepository(Journey::class);
         $journey = $journeyRepository->find($request->get('idJourney'));
+
         $cityRepository = $this->getDoctrine()->getRepository(City::class);
         $city = $cityRepository->find($request->get('idCity'));
 
+        // Creating the new step
         $step = new Step();
         $step->setComment($request->get('comment'));
         $step->setRank($request->get('rank'));
@@ -104,12 +85,6 @@ class StepController extends AbstractController
         $em->persist($step);
         $em->flush();
 
-        $data = $serializer->serialize($step, 'json');
-
-        $response = new Response($data);
-        $response->headers->set('Content-Type', 'application/json');
-
-        return $response;
-        
+        return $utilsService->formatResponse($step);
     }
 }
