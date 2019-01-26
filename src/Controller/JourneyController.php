@@ -5,10 +5,6 @@ namespace App\Controller;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Serializer\Encoder\XmlEncoder;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -17,6 +13,8 @@ use FOS\RestBundle\View\View;
 use FOS\RestBundle\Controller\Annotations as FOSRest;
 use App\Entity\Journey;
 
+// Services
+use App\Service\UtilsService;
 
 
 /**
@@ -50,13 +48,8 @@ class JourneyController extends AbstractController
      * @return Response
      */
 
-    public function createJourneyAction(Request $request)
+    public function createJourneyAction(Request $request, UtilsService $utilsService)
     {
-
-        $encoders = array(new XmlEncoder(), new JsonEncoder());
-        $normalizers = array(new ObjectNormalizer());
-
-        $serializer = new Serializer($normalizers, $encoders);
 
         $journey = new Journey();
         $journey->setDescription($request->get('description'));
@@ -66,6 +59,7 @@ class JourneyController extends AbstractController
 
         //$data =  $this->get('jms_serializer')->serialize($journey, 'json');
 
+        $serializer = $utilsService->getSerializer();
         $data = $serializer->serialize($journey, 'json');
 
         $response = new Response($data);
