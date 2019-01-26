@@ -15,35 +15,36 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\Controller\Annotations as FOSRest;
+use App\Entity\Step;
 use App\Entity\Journey;
-
+use App\Entity\City;
 
 
 /**
- * Journey controller.
+ * Step controller.
  *
  * @Route("/api")
  */
-class JourneyController extends AbstractController
+class StepController extends AbstractController
 {
 
     /**
-     * Get journey by id.
-     * @FOSRest\Get("/journey/{id}")
+     * Get step by id.
+     * @FOSRest\Get("/step/{idStep}")
      * 
      *
      * @return Response
      */
-    public function getJourneyAction(int $id)
+    public function getStepAction(int $idStep)
     {
         $encoders = array(new XmlEncoder(), new JsonEncoder());
         $normalizers = array(new ObjectNormalizer());
         $serializer = new Serializer($normalizers, $encoders);
 
-        $repository = $this->getDoctrine()->getRepository(Journey::class);
-        $journey = $repository->find($id);
+        $repository = $this->getDoctrine()->getRepository(Step::class);
+        $step = $repository->find($idStep);
         
-        $data = $serializer->serialize($journey, 'json');
+        $data = $serializer->serialize($step, 'json');
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
 
@@ -52,21 +53,21 @@ class JourneyController extends AbstractController
     }
 
     /**
-     * Lists all Journies.
-     * @FOSRest\Get("/journies")
+     * Lists all step of a journey.
+     * @FOSRest\Get("/steps/{idJourney}")
      *
      * @return Response
      */
-    public function getJourniesAction()
+    public function getStepsbyJourneyAction(int $idJourney)
     {
         $encoders = array(new XmlEncoder(), new JsonEncoder());
         $normalizers = array(new ObjectNormalizer());
         $serializer = new Serializer($normalizers, $encoders);
 
-        $repository = $this->getDoctrine()->getRepository(Journey::class);
-        $journies = $repository->findall();
+        $repository = $this->getDoctrine()->getRepository(Step::class);
+        $steps = $repository->findby(array('journey' => $idJourney));
         
-        $data = $serializer->serialize($journies, 'json');
+        $data = $serializer->serialize($steps, 'json');
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
 
@@ -74,13 +75,13 @@ class JourneyController extends AbstractController
     }
 
     /**
-     * Create Article.
-     * @FOSRest\Post("/journey")
+     * Create a step
+     * @FOSRest\Post("/step")
      *
      * @return Response
      */
 
-    public function createJourneyAction(Request $request)
+    public function createStepAction(Request $request)
     {
 
         $encoders = array(new XmlEncoder(), new JsonEncoder());
@@ -88,16 +89,22 @@ class JourneyController extends AbstractController
 
         $serializer = new Serializer($normalizers, $encoders);
 
-        $journey = new Journey();
-        $journey->setDescription($request->get('description'));
-        $journey->setTitle($request->get('title'));
+        $journeyRepository = $this->getDoctrine()->getRepository(Journey::class);
+        $journey = $journeyRepository->find($request->get('idJourney'));
+        $cityRepository = $this->getDoctrine()->getRepository(City::class);
+        $city = $cityRepository->find($request->get('idCity'));
+
+        $step = new Step();
+        $step->setComment($request->get('comment'));
+        $step->setRank($request->get('rank'));
+        $step->setDuration($request->get('duration'));
+        $step->setJourney($journey);
+        $step->setCity($city);
         $em = $this->getDoctrine()->getManager();
-        $em->persist($journey);
+        $em->persist($step);
         $em->flush();
 
-        //$data =  $this->get('jms_serializer')->serialize($journey, 'json');
-
-        $data = $serializer->serialize($journey, 'json');
+        $data = $serializer->serialize($step, 'json');
 
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');

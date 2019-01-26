@@ -7,20 +7,26 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Journey {
     /**
-     * @ORM\Column(type="integer")
      * @ORM\Id
+     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    public $idJourney;
+    public $id;
 
     /**
      * @ORM\Column(type="text")
      */
     public $description;
 
-    public function getIdJourney(): ?int
+    /**
+    * @ORM\Column(type="string", length=255, nullable=false)
+    */
+    public $title;
+
+
+    public function getId(): ?int
     {
-        return $this->idJourney;
+        return $this->id;
     }
 
     public function getDescription(): ?string
@@ -35,5 +41,15 @@ class Journey {
         return $this;
     }
     
-    //Getters and Setters
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
+    }
 }
