@@ -18,8 +18,8 @@ final class DashboardController extends AbstractController
      * @Route("/", name="app_dashboard_index")
      * @return Response
      */
-    public function indexAction(): Response
-    {
+	public function indexAction(): Response
+	{
         return $this->render('base.html.twig', []);
     }
 }
