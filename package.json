@@ -1,6 +1,8 @@
 {
     "devDependencies": {
         "@symfony/webpack-encore": "^0.22.0",
+        "node-sass": "^4.11.0",
+        "sass-loader": "7.0.1",
         "vue": "^2.5.22",
         "vue-loader": "^15.6.2",
         "vue-template-compiler": "^2.5.22",
@@ -13,5 +15,6 @@
         "dev": "encore dev",
         "watch": "encore dev --watch",
         "build": "encore production --progress"
-    }
+    },
+    "dependencies": {}
 }
