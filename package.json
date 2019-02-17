@@ -16,5 +16,7 @@
         "watch": "encore dev --watch",
         "build": "encore production --progress"
     },
-    "dependencies": {}
+    "dependencies": {
+        "axios": "^0.18.0"
+    }
 }
