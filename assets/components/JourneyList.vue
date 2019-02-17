@@ -1,9 +1,9 @@
 
 <template>
-    <ul v-if="journies && journies.length">
-        <li v-for="journey of journies">
-            <p><strong>{{journey.title}}</strong></p>
-            <p>{{journey.description}}</p>
+    <ul v-if="journeyList && journeyList.length">
+        <li v-for="journeyItem of journeyList">
+            <p><strong>{{journeyItem.title}}</strong></p>
+            <p>{{journeyItem.description}}</p>
         </li>
     </ul>
 
@@ -15,11 +15,11 @@
     let config = require('../config/config.json');
 
     export default {
-        name: 'app',
+        name: 'JourneyList',
         data(){
         	return{
                 loading : false,
-                journies : [],
+                journeyList : [],
                 errors : []
         	}
         },
@@ -38,7 +38,7 @@
                     .then(response => {
                         // JSON responses are automatically parsed.
                         console.log(response.data);
-                        this.journies = response.data;
+                        this.journeyList = response.data;
                     })
                     .catch(e => {
                         this.errors.push(e);
