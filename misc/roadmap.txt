@@ -1,0 +1,107 @@
+US planificateur
+
+EPIC 01 : BASE VOYAGE
+US00 : En tant qu’administrateur, je peux créer un voyage avec un titre et une description
+US01 : En tant qu’administrateur, je peux visualiser mon voyage (affichage du titre et de la description)
+US02 : En tant qu’administrateur, je peux ajouter une étape à mon voyage. Une étape comporte une ville, un champ commentaire, une durée et un rang (deux étapes d’un même voyage ne peuvent pas avoir le même rang).
+US03 : TECH_ je peux conceptualiser une ville. Une ville contient un nom, des coordonnées GPS, un pays.
+US04 : En tant qu’administrateur, je peux visualiser une étape de mon voyage. (Titre du voyage, ville de l’étape, rang de l’étape)
+
+EPIC 02 : GESTION DES ETAPES
+US05 : En tant qu’administrateur, je peux visualiser l’ensemble des étapes de mon voyage (liste des étapes)
+US06 : En tant qu’administrateur, je peux supprimer une étape de mon voyage
+US07 : En tant qu’administrateur, je peux réordonner les étapes de mon voyage
+US08 : En tant qu’administrateur, je peux affecter une date de départ à mon voyage (obligatoire)
+US09 : En tant qu’administrateur, je peux modifier la date de départ de mon voyage
+US25 : En tant qu’administrateur, je peux visualiser le nombre de jour de mon voyage
+
+EPIC 03 : ETAPE AVEC RESERVATION - 1
+US10 : TECH_ je peux conceptualiser une réservation. Une réservation comporte un titre, une quantité, un statut (liste finie de statuts) et un budget
+Statuts : à réservé, agence contactée, à payer, réservé
+US11 : En tant qu’administrateur, je peux ajouter une ou plusieurs activités à une étape. Une activité est une réservation de type « activité »
+US12 : En tant qu’administrateur, je peux ajouter un hébergement à une étape. Un hébergement est une réservation de type « hébergement »
+US13 : En tant qu’administrateur, je peux ajouter un ou plusieurs transports à une étape. Un transport est une réservation de type « transport » avec un mode (liste finie de mode), une date de départ (jour et heure) et une date d’arrivée (jour et heure), une ville de départ et une ville d’arrivée.
+Modes : avion, train, bus, voiture, marche, bateau
+
+EPIC 04 : ETAPE AVEC RESERVATION - 2
+US14 : En tant qu’administrateur, je peux visualiser une étape de mon voyage (Titre du voyage, ville de l’étape, rang de l’étape, liste des activités associées, hébergement associé, liste des transports associés)
+US15 : En tant qu’administrateur, je peux modifier ou supprimer une activité au sein d’une étape
+US16 : En tant qu’administrateur, je peux modifier ou supprimer un hébergement au sein d’une étape
+US17 : En tant qu’administrateur, je peux modifier ou supprimer un transport au sein d’une étape
+
+EPIC 05 : LA MAPPEMONDE
+US18 : En tant qu’administrateur, je peux visualiser les étapes de mon voyage sur une mappemonde centrée
+US19 : En tant qu’administrateur, je peux retrouver l’ensemble des étapes de mon voyage et la mappemonde au sein d’une catégorie « Itinéraire »
+
+
+EPIC 06 : GESTION DU BUDGET
+US20 : En tant qu’administrateur, je peux accéder à la catégorie « Budget » de mon voyage. Un budget comporte 3 sous-catégories : activité, transport et hébergement.
+US21 : En tant qu’administrateur, dans la catégorie « budget » de mon voyage je peux retrouver l’ensemble des activités enregistrées dans les étapes du voyage, au sein de la sous-catégorie « activité »
+US22 : En tant qu’administrateur, dans la catégorie « budget » de mon voyage je peux retrouver l’ensemble des transports enregistrés dans les étapes du voyage, au sein de la sous-catégorie « transport »
+US23 : En tant qu’administrateur, dans la catégorie « budget » de mon voyage je peux retrouver l’ensemble des hébergements enregistrés dans les étapes du voyage, au sein de la catégorie « hébergements »
+US24 : En tant qu’administrateur, je peux visualiser la somme de mes dépenses par sous-catégorie et au total dans la catégorie budget de mon voyage
+
+EPIC 07 : GESTION DES RESERVATIONS
+US26 : En tant qu’administrateur, je peux accéder à la catégorie « Réservations » de mon voyage. Depuis la page de réservation, je peux visualiser la liste des réservations déjà créées.
+US27 : En tant qu’administrateur, je peux ordonner/filtrer la liste des réservations de la page réservations par date, par statut, par pays ou par type de réservation.
+US28 : En tant qu’administrateur, depuis la page de réservations je peux modifier une réservation quelle que soit sa catégorie.
+US29 : En tant qu’administrateur, depuis la page réservation je peux créer une réservation, en l’affectant à une étape existante de mon voyage.
+US30 : En tant qu’administrateur, depuis la page de réservations, je peux accéder à « l’assistant réservation », pour une réservation dont le statut n’est pas « réservé ».
+
+EPIC 08 : L’ASSISTANT RESERVATION - HEBERGEMENT
+US31 : En tant qu’administrateur, si ma réservation est un hébergement, alors lorsque je demande l’assistant réservation, je vois les résultats booking pour cet hébergement. Les critères de recherche sont ceux rempli lors de la création de la réservation : quantité (1 = 1 chambre double), budget (+- X€), ville de l’étape, dates calculées de l’étape, nombre de jour de l’étape.
+US32 : En tant qu’administrateur, si ma réservation est un hébergement, alors lorsque je demande l’assistant réservation, je vois les résultats airBnb pour cet hébergement. Les critères de recherche sont ceux rempli lors de la création de la réservation : quantité (1 = 1 chambre double), budget (+- X€), ville de l’étape, dates calculées de l’étape, nombre de jour de l’étape.
+
+EPIC 09 : L’ASSISTANT RESERVATION - TRANSPORT
+US33 : En tant qu’administrateur, si ma réservation est un transport de mode « avion », alors lorsque je demande l’assistant réservation, je vois les résultats google flight pour ce transport. Les critères de recherche sont ceux remplis lors de la création de la réservation : quantité, villes de départ et d’arrivée, date et heure de départ et d’arrivée.
+
+EPIC 10 : L’ASSISTANT RESERVATION - ACTIVITE
+US34 : En tant qu’administrateur, si ma réservation est une activité, alors, lorsque je demande l’assistant réservation, je vois les résultats trip advisor pour cette activité. Les critères de recherche sont ceux remplis lors de la création de la réservation : quantité, ville de l’étape, dates de début et de fin de l’étape.
+US35 : En tant qu’administrateur, si ma réservation est une activité, alors, lorsque je demande l’assistant réservation, je vois les résultats get your guide pour cette activité. Les critères de recherche sont ceux remplis lors de la création de la réservation : quantité, ville de l’étape, dates de début et de fin de l’étape.
+
+US36 : En tant qu’administrateur, au clic sur un résultat de l’assistant réservation, je vois un nouvel onglet s’ouvrir contenant le détail du résultat, sur la page du prestataire. (booking, airBnb, google flight, trip advisor ou get your guide)
+
+EPIC 11 : LA GESTION DES RECITS
+US37 : TECH_je peux conceptualiser un récit (« story » en anglais). Un récit comporte : 
+Un titre
+Une étape (une étape peut contenir plusieurs récits)
+Une date (comprise entre le premier et le dernier jour de l’étape) 
+Une ou deux humeurs (liste finie d’humeurs) 
+Une météo (liste finie de météo) 
+Un statut (liste finie de statut)
+Un contenu (texte et photos)
+Humeurs : Content, ravi, émerveillé, épuisé, triste, énervé, impatient, bof, pas content, frigorifié, en sueur (représenté par des emojis)
+Météo : soleil, soleil et nuages, nuages, pluie, fortes pluie, orages, neige, brouillard (représentés par des emojis)
+Statut : privé, public
+US38 : En tant qu’administrateur, je peux accéder à la catégorie « Journal » de mon voyage. Elle contient la liste des récits de mon voyage, ordonnés par date croissante ou décroissante.
+US39 : En tant qu’administrateur, depuis la catégorie « Journal » de mon voyage, je peux créer un nouveau récit
+US40 : En tant qu’administrateur, depuis la catégorie « Journal » de mon voyage, je peux modifier un récit (tous attributs)
+US41 : En tant qu’administrateur, depuis la catégorie « Journal » de mon voyage, je peux supprimer un récit
+
+EPIC 12 : GESTION DES PROFILS
+US42 : en tant qu’utilisateur du site je peux me connecter (créer mon compte ou m’identifier) via un login / mdp, via google connect ou facebook connect.
+US43 : en tant qu’utilisateur identifié au site je peux créer un ou plusieurs voyages
+US44 : en tant qu’utilisateur identifié au site, je peux visualiser la liste de mes voyages
+US45 : en tant qu’utilisateur identifié au site, je suis administrateur de mes propres voyages (création, visualisation, modification et suppression)
+US46 : En tant qu’administrateur, je peux partager un voyage via l’envoi d’un lien sécurisé disponible (un par voyage) depuis la liste de mes voyages.
+US47 : en tant qu’utilisateur du site, je peux accéder à un voyage en « lecture seule » via un lien sécurisé (transmis par le créateur du voyage). Droits lecteurs :
+Visualisation de la liste des étapes et de la mappemonde
+Visualisation du détail d’une étape
+Visualisation de la liste des réservations
+Visualisation de la liste des récits
+Visualisation du détail d’un récit
+Aucun accès en création, modification ou suppression. Pas d’accès à la page budget, pas d’accès à l’assistant réservations, pas d’accès aux autres voyages du créateur du voyage partagé.
+Droits Administrateurs > droits lecteurs. Si une US indique « ETQ lecteur », alors le profil administrateur y aura également accès
+
+EPIC 13 : LES FICHES PAYS
+US48 : TECH_ je peux conceptualiser une « fiche pays ». Une fiche pays comporte un pays, une monnaie, un continent, une description, 
+US49 : En tant que gestionnaire, je peux ajouter une fiche pays au site
+US50 : En tant que gestionnaire, je peux modifier une fiche pays
+US51 : En tant que gestionnaire, je peux supprimer une fiche pays du site
+US52 : En tant que lecteur, je peux consulter la liste des fiches pays disponible depuis la page d’accueil du site. Depuis la page dédiée je peux filtrer par pays ou par ordre alphabétique.
+
+EPIC 14 : GESTION DU COMPTE
+Mon compte
+
+EPIC 15 : L’ASSISTANT DESTINATION
+Assistant destination
